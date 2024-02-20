@@ -13,6 +13,9 @@
         android:theme="@style/Theme.APKColegio202410"
         tools:targetApi="31">
         <activity
+            android:name=".MnMenu"
+            android:exported="false" />
+        <activity
             android:name=".MnLogin"
             android:exported="false" />
         <activity
