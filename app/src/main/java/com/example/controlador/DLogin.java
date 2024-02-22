@@ -6,6 +6,7 @@ import android.widget.Toast;
 
 import com.example.apkcolegio202410.MnMenu;
 import com.example.modelo.Login;
+import com.example.util.Mensaje;
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.AsyncHttpResponseHandler;
 import com.loopj.android.http.RequestParams;
@@ -18,10 +19,12 @@ import cz.msebera.android.httpclient.Header;
 
 public class DLogin implements IDao <Login>{
     private AsyncHttpClient async=new AsyncHttpClient();
-    private String url="http://192.168.0.15:8070/PHPColegio/Servicio/SLogin.php";
+    private String url="http://192.168.0.28:8070/PHPColegio/Servicio/SLogin.php";
+    private Mensaje ms=null;
     private Context ct;
     public DLogin(Context c){
         this.ct = c;
+        this.ms =new Mensaje(ct);
     }
 
     public void getVal(String dni,String pas)throws Exception{
@@ -31,6 +34,11 @@ public class DLogin implements IDao <Login>{
         params.add("txtpas",pas);
         params.add("txttipo","PRO");
         async.get(url, params, new AsyncHttpResponseHandler() {
+            @Override
+            public void onStart() {
+                super.onStart();
+                ms.MProgressBarDato();
+            }
             @Override
             public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
                 String resp=new String(responseBody);
@@ -43,9 +51,11 @@ public class DLogin implements IDao <Login>{
                     else getToast("Error:"+cod);
                 } catch (JSONException e)
                 {getToast("Error JSON:"+e.getMessage());}
+                finally {ms.MCloseProgBar(true);}
             }
             @Override
             public void onFailure(int statusCode, Header[] headers, byte[] responseBody, Throwable error) {
+                ms.MCloseProgBar(true);
                 getToast("Error 404:"+error.getMessage());
             }
         });
