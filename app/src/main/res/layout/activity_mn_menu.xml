@@ -6,7 +6,14 @@
     android:layout_height="match_parent"
     tools:context=".MnMenu">
 
+    <androidx.viewpager2.widget.ViewPager2
+        android:id="@+id/FrmMenu_VPantalla"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@id/FrmMenu_TabMenu" />
+
     <com.google.android.material.tabs.TabLayout
+        android:id="@+id/FrmMenu_TabMenu"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true">
@@ -15,18 +22,18 @@
             android:id="@+id/FrmMenu_tabInicio"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Monday" />
+            android:text="Inicio" />
 
         <com.google.android.material.tabs.TabItem
             android:id="@+id/FrmMenu_tabasis"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Tuesday" />
+            android:text="Asistencia" />
 
         <com.google.android.material.tabs.TabItem
             android:id="@+id/FrmMenu_tabusu"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Wednesday" />
+            android:text="Usuarios" />
     </com.google.android.material.tabs.TabLayout>
 </RelativeLayout>
