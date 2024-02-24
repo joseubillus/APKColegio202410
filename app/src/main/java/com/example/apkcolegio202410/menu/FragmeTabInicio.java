@@ -7,6 +7,8 @@ import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
+import android.widget.GridView;
 
 import com.example.apkcolegio202410.R;
 
@@ -60,7 +62,14 @@ public class FragmeTabInicio extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_fragme_tab_inicio, container, false);
+        View root=inflater.inflate(R.layout.fragment_fragme_tab_inicio, container, false);
+
+        GridView DataGrid=(GridView) root.findViewById(R.id.FrmTabInicio_DataGrid);
+
+        ArrayAdapter adp=new ArrayAdapter(root.getContext(),
+                android.R.layout.simple_dropdown_item_1line);
+        for (int i = 0; i < 1000; i++) adp.add("Prueba "+i);
+        DataGrid.setAdapter(adp);
+        return root;
     }
 }

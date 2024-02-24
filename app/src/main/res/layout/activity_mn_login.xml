@@ -24,7 +24,8 @@
             android:layout_height="wrap_content"
             android:ems="10"
             android:hint="Usuario"
-            android:inputType="text" />
+            android:inputType="text"
+            android:text="12345678" />
 
         <EditText
             android:id="@+id/FrmLog_txtpas"
@@ -32,7 +33,8 @@
             android:layout_height="wrap_content"
             android:ems="10"
             android:hint="Password"
-            android:inputType="text" />
+            android:inputType="number|numberPassword"
+            android:text="123" />
 
         <Button
             android:id="@+id/FrmLog_btnacep"
