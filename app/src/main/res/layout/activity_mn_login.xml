@@ -6,47 +6,57 @@
     android:layout_height="match_parent"
     tools:context=".MnLogin">
 
-    <LinearLayout
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_margin="10dp"
-        android:orientation="vertical">
+        android:layout_height="match_parent" >
 
-        <ImageView
-            android:id="@+id/imageView"
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:srcCompat="@drawable/equipo" />
+            android:layout_margin="10dp"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginEnd="10dp"
+            android:layout_marginBottom="10dp"
+            android:orientation="vertical">
 
-        <EditText
-            android:id="@+id/FrmLog_txtusu"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:ems="10"
-            android:hint="Usuario"
-            android:inputType="text"
-            android:text="12345678" />
+            <ImageView
+                android:id="@+id/imageView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:srcCompat="@drawable/equipo" />
 
-        <EditText
-            android:id="@+id/FrmLog_txtpas"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:ems="10"
-            android:hint="Password"
-            android:inputType="number|numberPassword"
-            android:text="123" />
+            <EditText
+                android:id="@+id/FrmLog_txtusu"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:hint="Usuario"
+                android:inputType="text"
+                android:text="12345678" />
 
-        <Button
-            android:id="@+id/FrmLog_btnacep"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:onClick="OnClick_BtnAcep"
-            android:text="Aceptar" />
+            <EditText
+                android:id="@+id/FrmLog_txtpas"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:hint="Password"
+                android:inputType="number|numberPassword"
+                android:text="123" />
 
-        <Button
-            android:id="@+id/FrmLog_btncan"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Cancelar" />
-    </LinearLayout>
+            <Button
+                android:id="@+id/FrmLog_btnacep"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:onClick="OnClick_BtnAcep"
+                android:text="Aceptar" />
+
+            <Button
+                android:id="@+id/FrmLog_btncan"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Cancelar" />
+        </LinearLayout>
+    </ScrollView>
+
 </RelativeLayout>

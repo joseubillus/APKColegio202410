@@ -19,7 +19,7 @@ import cz.msebera.android.httpclient.Header;
 
 public class DLogin implements IDao <Login>{
     private AsyncHttpClient async=new AsyncHttpClient();
-    private String url="http://192.168.0.28:8070/PHPColegio/Servicio/SLogin.php";
+    private String url=Conexion.getUrl("SLogin.php");
     private Mensaje ms=null;
     private Context ct;
     public DLogin(Context c){
