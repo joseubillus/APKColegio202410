@@ -11,6 +11,9 @@ import android.widget.ArrayAdapter;
 import android.widget.GridView;
 
 import com.example.apkcolegio202410.R;
+import com.example.controlador.DCursos;
+import com.example.modelo.Cursos;
+import com.example.util.ADPCursos;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -66,10 +69,11 @@ public class FragmeTabInicio extends Fragment {
 
         GridView DataGrid=(GridView) root.findViewById(R.id.FrmTabInicio_DataGrid);
 
-        ArrayAdapter adp=new ArrayAdapter(root.getContext(),
-                android.R.layout.simple_dropdown_item_1line);
-        for (int i = 0; i < 1000; i++) adp.add("Prueba "+i);
-        DataGrid.setAdapter(adp);
+        DCursos cur=new DCursos(root.getContext());
+        try {
+            cur.DataList=DataGrid;
+            cur.getList("");
+        } catch (Exception e) {throw new RuntimeException(e);}
         return root;
     }
 }
