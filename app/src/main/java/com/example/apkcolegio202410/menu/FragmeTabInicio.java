@@ -9,6 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.GridView;
+import android.widget.SearchView;
 
 import com.example.apkcolegio202410.R;
 import com.example.controlador.DCursos;
@@ -62,18 +63,40 @@ public class FragmeTabInicio extends Fragment {
         }
     }
 
+    private GridView DataGrid;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View root=inflater.inflate(R.layout.fragment_fragme_tab_inicio, container, false);
 
-        GridView DataGrid=(GridView) root.findViewById(R.id.FrmTabInicio_DataGrid);
+        DataGrid=(GridView) root.findViewById(R.id.FrmTabInicio_DataGrid);
+        SearchView schbus=(SearchView) root.findViewById(R.id.FrmTabInicio_Schbus);
 
-        DCursos cur=new DCursos(root.getContext());
         try {
+            DCursos cur=new DCursos(root.getContext());
             cur.DataList=DataGrid;
             cur.getList("");
         } catch (Exception e) {throw new RuntimeException(e);}
+
+        schbus.setOnQueryTextListener(getBus(root));
+
         return root;
+    }
+
+
+    public SearchView.OnQueryTextListener getBus(View root) {
+        return new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {return false;}
+            @Override
+            public boolean onQueryTextChange(String txtbus) {
+                try {
+                    DCursos cur=new DCursos(root.getContext());
+                    cur.DataList=DataGrid;
+                    cur.getList(txtbus);
+                } catch (Exception e) {throw new RuntimeException(e);}
+                return false;
+            }
+        };
     }
 }

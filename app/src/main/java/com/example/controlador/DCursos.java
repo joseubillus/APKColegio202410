@@ -39,7 +39,7 @@ public class DCursos implements IDao <Login>{
     public void getList(Object bus) throws Exception {
         RequestParams params=new RequestParams();
         params.add("frm","list2");
-        params.add("txtbus","1");
+        params.add("txtbus",bus.toString());
         async.get(url, params, new AsyncHttpResponseHandler() {
             @Override
             public void onStart() {
