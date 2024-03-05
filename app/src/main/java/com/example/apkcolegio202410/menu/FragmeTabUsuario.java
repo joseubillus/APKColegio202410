@@ -2,13 +2,26 @@ package com.example.apkcolegio202410.menu;
 
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.ListView;
 
 import com.example.apkcolegio202410.R;
+import com.example.modelo.Chat;
+import com.example.util.ADPChat;
+import com.example.util.Mensaje;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -17,10 +30,12 @@ import com.example.apkcolegio202410.R;
  */
 public class FragmeTabUsuario extends Fragment {
 
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
+    private FirebaseDatabase database=null;
+    private DatabaseReference myref=null;
+    private ADPChat adp;
+    ListView lstdata;
 
     // TODO: Rename and change types of parameters
     private String mParam1;
@@ -60,7 +75,43 @@ public class FragmeTabUsuario extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_fragme_tab_usuario, container, false);
+        View root= inflater.inflate(R.layout.fragment_fragme_tab_usuario, container, false);
+
+        lstdata=(ListView) root.findViewById(R.id.FrmTabUsu_LstData);
+        adp=new ADPChat(root.getContext());
+
+        EditText txtmen=(EditText) root.findViewById(R.id.FrmTabUsu_txtmen);
+        Button btn=(Button) root.findViewById(R.id.FrmTabUsu_btnenv);
+        btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String nom="jose";
+                String men=txtmen.getText().toString();
+                myref.push().setValue(new Chat(nom,men));
+                txtmen.setText("");
+            }
+        });
+
+        database = FirebaseDatabase.getInstance();
+        myref = database.getReference("Mensaje");
+        myref.addValueEventListener(getDataTime(root));
+
+        return root;
+    }
+
+    public ValueEventListener getDataTime(View root){
+        return new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                adp.Clear();
+                for (DataSnapshot post: snapshot.getChildren()) {
+                    Chat obj=post.getValue(Chat.class);
+                    adp.getAdd(new Chat(obj.getNom(),obj.getMens()));
+                }
+                lstdata.setAdapter(adp);
+            }
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {}
+        };
     }
 }

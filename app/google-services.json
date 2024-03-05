@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "386844710898",
+    "project_id": "apkcolegio202410-2c8f9",
+    "storage_bucket": "apkcolegio202410-2c8f9.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:386844710898:android:e0e896ab1b3141acfffd6b",
+        "android_client_info": {
+          "package_name": "com.example.apkcolegio202410"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA_gSDGryE4GBKB38P8l08V39UYqQ2h99s"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
