@@ -12,6 +12,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import com.example.apkcolegio202410.R;
 import com.example.modelo.Chat;
@@ -28,14 +29,15 @@ import com.google.firebase.database.ValueEventListener;
  * Use the {@link FragmeTabUsuario#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class FragmeTabUsuario extends Fragment {
+public class FragmeTabUsuario extends Fragment{ //implements View.OnClickListener {
 
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
     private FirebaseDatabase database=null;
     private DatabaseReference myref=null;
     private ADPChat adp;
-    ListView lstdata;
+    private ListView lstdata;
+    private EditText txtmen;
 
     // TODO: Rename and change types of parameters
     private String mParam1;
@@ -80,9 +82,20 @@ public class FragmeTabUsuario extends Fragment {
         lstdata=(ListView) root.findViewById(R.id.FrmTabUsu_LstData);
         adp=new ADPChat(root.getContext());
 
-        EditText txtmen=(EditText) root.findViewById(R.id.FrmTabUsu_txtmen);
+        txtmen=(EditText) root.findViewById(R.id.FrmTabUsu_txtmen);
         Button btn=(Button) root.findViewById(R.id.FrmTabUsu_btnenv);
-        btn.setOnClickListener(new View.OnClickListener() {
+        //btn.setOnClickListener(this);
+        btn.setOnClickListener(getClick());
+
+        database = FirebaseDatabase.getInstance();
+        myref = database.getReference("Mensaje");
+        myref.addValueEventListener(getDataTime(root));
+
+        return root;
+    }
+
+    public View.OnClickListener getClick(){
+       return new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 String nom="jose";
@@ -90,13 +103,7 @@ public class FragmeTabUsuario extends Fragment {
                 myref.push().setValue(new Chat(nom,men));
                 txtmen.setText("");
             }
-        });
-
-        database = FirebaseDatabase.getInstance();
-        myref = database.getReference("Mensaje");
-        myref.addValueEventListener(getDataTime(root));
-
-        return root;
+        };
     }
 
     public ValueEventListener getDataTime(View root){
@@ -114,4 +121,12 @@ public class FragmeTabUsuario extends Fragment {
             public void onCancelled(@NonNull DatabaseError error) {}
         };
     }
+
+    /*public void OnClick_BtnEnv(View v){
+        Toast.makeText(v.getContext(),"Hola",Toast.LENGTH_SHORT).show();
+    }
+    @Override
+    public void onClick(View v) {
+        OnClick_BtnEnv(v);
+    }*/
 }

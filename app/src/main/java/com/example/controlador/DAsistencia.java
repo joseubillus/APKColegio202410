@@ -3,11 +3,14 @@ package com.example.controlador;
 import android.content.Context;
 import android.content.Intent;
 import android.widget.GridView;
+import android.widget.ListView;
 import android.widget.Toast;
 
-import com.example.apkcolegio202410.MnMenu;
+import com.example.modelo.Alumnos;
+import com.example.modelo.Asistencia;
 import com.example.modelo.Cursos;
 import com.example.modelo.Login;
+import com.example.util.ADPAsistencia;
 import com.example.util.ADPCursos;
 import com.example.util.Mensaje;
 import com.loopj.android.http.AsyncHttpClient;
@@ -23,14 +26,14 @@ import java.util.List;
 
 import cz.msebera.android.httpclient.Header;
 
-public class DCursos implements IDao <Login>{
+public class DAsistencia implements IDao <Login>{
     private AsyncHttpClient async=new AsyncHttpClient();
-    private String url=Conexion.getUrl("SCurPro.php");
-    private static List<Cursos> array=new ArrayList<>();
+    private String url=Conexion.getUrl("SAsistencia.php");
+    private static List<Asistencia> array=new ArrayList<>();
     private Mensaje ms=null;
     private Context ct;
-    public GridView DataList;
-    public DCursos(Context c){
+    public ListView DataList;
+    public DAsistencia(Context c){
         this.ct = c;
         this.ms =new Mensaje(ct);
     }
@@ -38,8 +41,9 @@ public class DCursos implements IDao <Login>{
     @Override
     public void getList(Object bus) throws Exception {
         RequestParams params=new RequestParams();
-        params.add("frm","list2");
-        params.add("txtbus",bus.toString());
+        params.add("frm","list");
+        params.add("codcurp","1");
+        params.add("fecha",bus.toString());
         async.get(url, params, new AsyncHttpResponseHandler() {
             @Override
             public void onStart() {
@@ -50,7 +54,7 @@ public class DCursos implements IDao <Login>{
             public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
                 String resp=new String(responseBody);
                 getJSON(resp);
-                DataList.setAdapter(new ADPCursos(ct,array));
+                DataList.setAdapter(new ADPAsistencia(ct,array));
                 ms.MCloseProgBar(true);
             }
             @Override
@@ -71,10 +75,12 @@ public class DCursos implements IDao <Login>{
             array.clear();
             JSONArray json=new JSONArray(resp);
             for (int i = 0; i < json.length(); i++) {
-                JSONObject jsonArray=json.getJSONObject(i).getJSONObject("curso");
-                String cod=jsonArray.getString("codcur");
-                String nom=jsonArray.getString("nomcur");
-                array.add(new Cursos(cod,nom,null));
+                JSONObject jsonArray=json.getJSONObject(i).getJSONObject("alumno");
+                int cod=new Integer(jsonArray.getString("idalum"));
+                String nom=jsonArray.getString("nomalum");
+                String ape=jsonArray.getString("apealum");
+                String foto=jsonArray.getString("fotoalum");
+                array.add(new Asistencia(null,0,new Alumnos(cod,nom,ape,foto),null,null));
             }
         } catch (JSONException e)
         {getToast("Error JSON:"+e.getMessage());}

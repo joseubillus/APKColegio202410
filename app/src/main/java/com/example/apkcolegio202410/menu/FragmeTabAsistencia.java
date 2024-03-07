@@ -7,8 +7,15 @@ import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ListView;
+import android.widget.Toast;
 
 import com.example.apkcolegio202410.R;
+import com.example.controlador.DAsistencia;
+import com.example.modelo.Alumnos;
+import com.example.modelo.Asistencia;
+import com.example.util.ADPAsistencia;
+import com.example.util.Mensaje;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -60,7 +67,20 @@ public class FragmeTabAsistencia extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_fragme_tab_asistencia, container, false);
+        View root = inflater.inflate(R.layout.fragment_fragme_tab_asistencia, container, false);
+
+        ListView lstdata=(ListView) root.findViewById(R.id.FrmTabAsis_LstData);
+        ADPAsistencia adp=new ADPAsistencia(root.getContext());
+
+        try {
+            DAsistencia dasis=new DAsistencia(root.getContext());
+            dasis.DataList=lstdata;
+            dasis.getList("");
+        } catch (Exception e) {getMen(root,"Error Tab:"+e.getMessage());}
+        return root;
+    }
+
+    public void getMen(View v,String men){
+        new Mensaje(v.getContext()).getMensaje(men).show();
     }
 }
