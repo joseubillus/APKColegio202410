@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.widget.Toast;
 
+import com.example.apkcolegio202410.MapsAlumno;
 import com.example.apkcolegio202410.MnMenu;
 import com.example.modelo.Login;
 import com.example.util.Mensaje;
