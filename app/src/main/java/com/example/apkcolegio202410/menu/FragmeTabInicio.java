@@ -7,6 +7,7 @@ import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.GridView;
 import android.widget.SearchView;
@@ -64,6 +65,7 @@ public class FragmeTabInicio extends Fragment {
     }
 
     private GridView DataGrid;
+    private DCursos cur;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -73,12 +75,19 @@ public class FragmeTabInicio extends Fragment {
         SearchView schbus=(SearchView) root.findViewById(R.id.FrmTabInicio_Schbus);
 
         try {
-            DCursos cur=new DCursos(root.getContext());
+            cur=new DCursos(root.getContext());
             cur.DataList=DataGrid;
             cur.getList("");
         } catch (Exception e) {throw new RuntimeException(e);}
 
         schbus.setOnQueryTextListener(getBus(root));
+
+        DataGrid.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+
+            }
+        });
 
         return root;
     }

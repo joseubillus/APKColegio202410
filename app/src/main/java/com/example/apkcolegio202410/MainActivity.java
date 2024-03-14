@@ -15,6 +15,6 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void OnClick_BtnAcep(View v){
-        startActivity(new Intent(MainActivity.this,MapsAlumno.class));
+        startActivity(new Intent(MainActivity.this,MnLogin.class));
     }
 }
