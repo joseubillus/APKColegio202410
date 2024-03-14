@@ -93,8 +93,6 @@ public class FragmeTabInicio extends Fragment {
                 Bundle bundle=new Bundle();
                 bundle.putString("codcurp",""+codcurp);
                 getFragmentManager().setFragmentResult("key",bundle);
-
-                //FragmeTabAsistencia.newInstance(cod,nom);
                 MnMenu.getFrame(1);
 
             }
