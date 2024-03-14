@@ -1,8 +1,11 @@
 package com.example.apkcolegio202410.menu;
 
+import android.content.Context;
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentResultListener;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -32,6 +35,7 @@ public class FragmeTabAsistencia extends Fragment {
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
+    private DAsistencia dasis;
 
     public FragmeTabAsistencia() {
         // Required empty public constructor
@@ -58,10 +62,23 @@ public class FragmeTabAsistencia extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
+        /*if (getArguments() != null) {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
-        }
+        }*/
+        getFragmentManager().setFragmentResultListener("key", this, new FragmentResultListener() {
+            @Override
+            public void onFragmentResult(@NonNull String requestKey, @NonNull Bundle result)
+            {       try {
+                        mParam1=result.getString("codcurp");
+                        getMen(getView(),"Datos"+mParam1);
+
+                        dasis.getList(""+mParam1);
+
+                    } catch (Exception e)
+                    {getMen(getView(),"Error Exp:"+e.getMessage());}
+                }
+        });
     }
 
     @Override
@@ -72,15 +89,13 @@ public class FragmeTabAsistencia extends Fragment {
         ListView lstdata=(ListView) root.findViewById(R.id.FrmTabAsis_LstData);
         ADPAsistencia adp=new ADPAsistencia(root.getContext());
 
-        try {
-            DAsistencia dasis=new DAsistencia(root.getContext());
-            dasis.DataList=lstdata;
-            dasis.getList("");
-        } catch (Exception e) {getMen(root,"Error Tab:"+e.getMessage());}
+        dasis=new DAsistencia(root.getContext());
+        dasis.DataList=lstdata;
+
         return root;
     }
 
-    public void getMen(View v,String men){
+    public void getMen(View v, String men){
         new Mensaje(v.getContext()).getMensaje(men).show();
     }
 }

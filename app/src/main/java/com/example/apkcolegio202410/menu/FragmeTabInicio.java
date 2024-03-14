@@ -11,7 +11,9 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.GridView;
 import android.widget.SearchView;
+import android.widget.Toast;
 
+import com.example.apkcolegio202410.MnMenu;
 import com.example.apkcolegio202410.R;
 import com.example.controlador.DCursos;
 import com.example.modelo.Cursos;
@@ -85,6 +87,15 @@ public class FragmeTabInicio extends Fragment {
         DataGrid.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                int codcurp=cur.getItem(position).getCodcurp();
+                Toast.makeText(root.getContext(),"Codigo"+codcurp,Toast.LENGTH_SHORT).show();
+
+                Bundle bundle=new Bundle();
+                bundle.putString("codcurp",""+codcurp);
+                getFragmentManager().setFragmentResult("key",bundle);
+
+                //FragmeTabAsistencia.newInstance(cod,nom);
+                MnMenu.getFrame(1);
 
             }
         });

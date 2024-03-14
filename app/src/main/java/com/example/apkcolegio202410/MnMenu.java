@@ -10,7 +10,7 @@ import com.google.android.material.tabs.TabLayout;
 
 public class MnMenu extends AppCompatActivity {
     private TabLayout tabpadre;
-    private ViewPager2 vPantalla;
+    private static ViewPager2 vPantalla;
     private PageTabPadre ADPPadre;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,5 +34,9 @@ public class MnMenu extends AppCompatActivity {
             @Override
             public void onTabReselected(TabLayout.Tab tab) {}
         });
+    }
+
+    public static void getFrame(int f){
+        vPantalla.setCurrentItem(f);
     }
 }

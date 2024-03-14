@@ -6,6 +6,7 @@ import android.widget.GridView;
 import android.widget.Toast;
 
 import com.example.apkcolegio202410.MnMenu;
+import com.example.modelo.CursoProg;
 import com.example.modelo.Cursos;
 import com.example.modelo.Login;
 import com.example.util.ADPCursos;
@@ -23,10 +24,10 @@ import java.util.List;
 
 import cz.msebera.android.httpclient.Header;
 
-public class DCursos implements IDao <Login>{
+public class DCursos implements IDao <CursoProg>{
     private AsyncHttpClient async=new AsyncHttpClient();
     private String url=Conexion.getUrl("SCurPro.php");
-    private static List<Cursos> array=new ArrayList<>();
+    private static List<CursoProg> array=new ArrayList<>();
     private Mensaje ms=null;
     private Context ct;
     public GridView DataList;
@@ -50,7 +51,10 @@ public class DCursos implements IDao <Login>{
             public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
                 String resp=new String(responseBody);
                 getJSON(resp);
-                DataList.setAdapter(new ADPCursos(ct,array));
+                ADPCursos adp=new ADPCursos(ct);
+                for (int i = 0; i < getSize(); i++)
+                    adp.getAdd(array.get(i).getCodcur());
+                DataList.setAdapter(adp);
                 ms.MCloseProgBar(true);
             }
             @Override
@@ -71,22 +75,24 @@ public class DCursos implements IDao <Login>{
             array.clear();
             JSONArray json=new JSONArray(resp);
             for (int i = 0; i < json.length(); i++) {
+                int codcurp=new Integer(json.getJSONObject(i).getString("codcurp"));
+                String codmat=json.getJSONObject(i).getString("codmat");
                 JSONObject jsonArray=json.getJSONObject(i).getJSONObject("curso");
                 String cod=jsonArray.getString("codcur");
                 String nom=jsonArray.getString("nomcur");
-                array.add(new Cursos(cod,nom,null));
+                array.add(new CursoProg(codcurp,codmat,null,new Cursos(cod,nom,null)));
             }
         } catch (JSONException e)
         {getToast("Error JSON:"+e.getMessage());}
     }
 
     @Override
-    public void getAdd(Login obj) throws Exception {
+    public void getAdd(CursoProg obj) throws Exception {
 
     }
 
     @Override
-    public void getUp(Login obj) throws Exception {
+    public void getUp(CursoProg obj) throws Exception {
 
     }
 
@@ -96,12 +102,12 @@ public class DCursos implements IDao <Login>{
     }
 
     @Override
-    public Login getItem(int f) {
-        return null;
+    public CursoProg getItem(int f) {
+        return array.get(f);
     }
 
     @Override
     public int getSize() {
-        return 0;
+        return array.size();
     }
 }

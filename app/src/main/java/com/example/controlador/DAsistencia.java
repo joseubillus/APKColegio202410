@@ -42,8 +42,8 @@ public class DAsistencia implements IDao <Login>{
     public void getList(Object bus) throws Exception {
         RequestParams params=new RequestParams();
         params.add("frm","list");
-        params.add("codcurp","1");
-        params.add("fecha",bus.toString());
+        params.add("codcurp",bus.toString());
+        params.add("fecha","");
         async.get(url, params, new AsyncHttpResponseHandler() {
             @Override
             public void onStart() {
